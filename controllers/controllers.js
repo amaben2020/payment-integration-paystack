@@ -12,10 +12,11 @@ const feeCharge = feesCalculator.calculateFor(250000); // 2,500 Naira
 
 const payStack = {
   acceptPayment: async (req, res) => {
+    const { email, amount } = req.body;
     try {
       const response = await paystack.initializeTransaction({
-        amount: 500000, // 5,000 Naira (remember you have to pass amount in kobo)
-        email: "benopski@gmail.com",
+        amount, // 5,000 Naira (remember you have to pass amount in kobo)
+        email,
       });
 
       res.json({
@@ -45,9 +46,8 @@ const payStack = {
         paid: false,
         currency: "NGN",
       });
-      console.log(data);
-      res.send("sucess");
-      // res.send(data.body.message);
+
+      res.send(data.body.message);
     } catch (error) {
       console.log(error);
     }
